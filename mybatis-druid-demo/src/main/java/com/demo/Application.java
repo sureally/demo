@@ -21,6 +21,7 @@ public class Application {
       UserDao userDao = sqlSession.getMapper(UserDao.class);
       userDao.insert(user);
       // 需要commit才能提交。
+      // 很多时候你不用调用 rollback()，因为 MyBatis 会在你没有调用 commit 时替你完成回滚操作。(官方介绍)
       sqlSession.commit();
     }
   }
@@ -44,14 +45,16 @@ public class Application {
 
   public static void main(String[] args) {
     User user = new User();
-    user.setName("test");
-    user.setPassword("000");
-    testInsert(user);
-
-    user.setName(null);
-    user.setPassword("update");
-    testUpdate(user);
-
-    System.out.println(testSelect(user.getId()));
+    user.setName("0");
+    user.setPassword("0");
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      UserDao userDao = sqlSession.getMapper(UserDao.class);
+      userDao.insert(user);
+      user.setName("1");
+      userDao.insert(user);
+      user.setName("failed");
+      userDao.insert(user);
+      sqlSession.commit();
+    }
   }
 }
