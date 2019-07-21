@@ -45,4 +45,9 @@ public interface UserDao {
     "</script>"
   })
   int updateSelection(User user);
+
+
+  @Insert({" insert into user(id, name, password) values(#{id}, #{name}, #{password}" +
+    " on duplicate key update password=#{password}"})
+  int insertOrUpdate(User user);
 }

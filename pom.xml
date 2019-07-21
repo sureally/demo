@@ -11,6 +11,7 @@
   <description>实现记录框架等demo的项目</description>
   <modules>
     <module>mybatis-druid-demo</module>
+    <module>flink-demo</module>
   </modules>
 
 
