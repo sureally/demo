@@ -13,6 +13,7 @@
     <module>mybatis-druid-demo</module>
     <module>flink-demo</module>
     <module>springboot-web-demo</module>
+    <module>drools-demo</module>
   </modules>
 
 
