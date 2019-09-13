@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  kafka:
+    bootstrap-servers:
+    consumer:
+      group-id:
+
+      # 手动提交
+      enable-auto-commit: false
+
+      # latest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+      # earliest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费.
+      # 这两个概念与flink中的概念不一样
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        session.timeout.ms: 60000
+      max-poll-records: 1000
+    listener:
+      log-container-config: false
+      # 手动提交
+      ack-mode: manual_immediate
