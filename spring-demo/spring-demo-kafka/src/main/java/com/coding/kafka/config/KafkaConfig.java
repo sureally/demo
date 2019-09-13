@@ -26,7 +26,9 @@ import org.springframework.kafka.listener.ContainerProperties;
 public class KafkaConfig {
   private final KafkaProperties kafkaProperties;
 
-  // 默认
+  /**
+   * 默认
+   */
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
@@ -42,7 +44,9 @@ public class KafkaConfig {
     return new DefaultKafkaConsumerFactory<String, String>(kafkaProperties.buildConsumerProperties());
   }
 
-  // 批量
+  /**
+   * 批量
+   */
   @Bean("ackBatchContainerFactory")
   public ConcurrentKafkaListenerContainerFactory<String, String> ackBatchContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
@@ -50,11 +54,14 @@ public class KafkaConfig {
     factory.setBatchListener(true);
     // ack 的模式为手动提交 offset
     factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+    // 可设定多线程消费，最大线程数为消费topic的分区数，也就是一个线程消费一个分区可达到最大的吞吐量
     factory.setConcurrency(KafkaConstants.SINGLE_CONCURRENCY);
     return factory;
   }
 
-  // 单条消费
+  /**
+   * 单条消费
+   */
   @Bean("ackContainerFactory")
   public ConcurrentKafkaListenerContainerFactory<String, String> ackContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();

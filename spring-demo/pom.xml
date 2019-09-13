@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>web-test-demo</module>
+    <module>spring-demo-kafka</module>
   </modules>
 
   <dependencyManagement>
