@@ -17,5 +17,14 @@
     <module>spring-demo</module>
   </modules>
 
+  <properties>
+    <java.version>1.8</java.version>
+    <encoding>UTF-8</encoding>
+    <!--    避免idea 每次都恢复到1.5等级 -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+  </properties>
+
 
 </project>

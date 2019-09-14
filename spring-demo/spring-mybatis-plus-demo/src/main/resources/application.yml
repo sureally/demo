@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&jdbcCompliantTruncation=false
+      username: root
+      password: 55555555
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      initialSize: 1
+      minIdle: 1
+      maxActive: 5
+      maxWait: 60000
+
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+
+      timeBetweenEvictionRunsMillis: 600000
+      validationQuery: SELECT 1 from dual
+      keepAlive: true
+logging:
+  level:
+    com.coding.mybatisplus: debug
