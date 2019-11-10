@@ -10,10 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <description>实现记录框架等demo的项目</description>
   <modules>
-    <module>mybatis-druid-demo</module>
     <module>flink-demo</module>
-    <module>springboot-web-demo</module>
-    <module>drools-demo</module>
     <module>spring-demo</module>
   </modules>
 

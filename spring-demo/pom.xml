@@ -12,8 +12,8 @@
   <artifactId>spring-demo</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>web-test-demo</module>
-    <module>spring-demo-kafka</module>
+    <module>spring-web-demo</module>
+    <module>spring-kafka-demo</module>
     <module>spring-mybatis-plus-demo</module>
     <module>spring-async</module>
   </modules>
