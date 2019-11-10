@@ -1,13 +1,13 @@
 package com.coding.kafka.config;
 
-import com.coding.kafka.constants.KafkaConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.annotation.KafkaListenerConfigurer;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistrar;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
@@ -20,54 +20,61 @@ import org.springframework.kafka.listener.ContainerProperties;
  * @Version 1.0
  **/
 @Configuration
-@EnableConfigurationProperties({KafkaProperties.class})
 @EnableKafka
 @AllArgsConstructor
 public class KafkaConfig {
+
   private final KafkaProperties kafkaProperties;
 
+  private final Integer SINGLE_CONCURRENCY = 1;
+
+  private final Integer BATCH_CONCUARRENCY = 4;
+
   /**
-   * 默认
+   * 默认，自动提交offset
    */
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
-    factory.setConcurrency(KafkaConstants.SINGLE_CONCURRENCY);
-    factory.setBatchListener(true);
-    factory.getContainerProperties().setPollTimeout(3000);
     return factory;
   }
 
+  /**
+   * consumer factory
+   * @return
+   */
   @Bean
   public ConsumerFactory<String, String> consumerFactory() {
-    return new DefaultKafkaConsumerFactory<String, String>(kafkaProperties.buildConsumerProperties());
+    return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
   }
 
   /**
-   * 批量
+   * 批量消费，手动提交
    */
   @Bean("ackBatchContainerFactory")
   public ConcurrentKafkaListenerContainerFactory<String, String> ackBatchContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     factory.setBatchListener(true);
     // ack 的模式为手动提交 offset
     factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
     // 可设定多线程消费，最大线程数为消费topic的分区数，也就是一个线程消费一个分区可达到最大的吞吐量
-    factory.setConcurrency(KafkaConstants.SINGLE_CONCURRENCY);
+    factory.setConcurrency(BATCH_CONCUARRENCY);
     return factory;
   }
 
   /**
-   * 单条消费
+   * 单条消费，手动提交
    */
   @Bean("ackContainerFactory")
   public ConcurrentKafkaListenerContainerFactory<String, String> ackContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+    ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
-    factory.setConcurrency(KafkaConstants.SINGLE_CONCURRENCY);
+    factory.setBatchListener(false);
+    factory.setConcurrency(SINGLE_CONCURRENCY);
     return factory;
   }
+
 }

@@ -1,9 +1,0 @@
-
-spring:
-  datasource:
-    url:
-      jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&jdbcCompliantTruncation=false
-    username:
-      root
-    password:
-      55555555

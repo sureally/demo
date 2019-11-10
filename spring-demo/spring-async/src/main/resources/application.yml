@@ -1,0 +1,8 @@
+async:
+  task:
+    pool:
+      corePoolSize: 10
+      maxPoolSize: 100
+      keepAliveSeconds: 10
+      queueCapacity: 100
+      threadNamePrefix: Async-Service-

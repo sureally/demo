@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder // builder 构建器模式
+@Builder
 @TableName("user")
 public class User implements Serializable {
   private static final long serialVersionUID = -1840831686851699943L;

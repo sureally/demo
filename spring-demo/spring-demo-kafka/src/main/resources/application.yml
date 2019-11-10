@@ -3,9 +3,9 @@ server:
 
 spring:
   kafka:
-    bootstrap-servers:
+    bootstrap-servers: xxx.com
     consumer:
-      group-id:
+      group-id: consumer_test
 
       # 手动提交
       enable-auto-commit: false
@@ -18,8 +18,4 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         session.timeout.ms: 60000
-      max-poll-records: 1000
-    listener:
-      log-container-config: false
-      # 手动提交
-      ack-mode: manual_immediate
+      max-poll-records: 10
