@@ -15,7 +15,7 @@
     <module>spring-web-demo</module>
     <module>spring-kafka-demo</module>
     <module>spring-mybatis-plus-demo</module>
-    <module>spring-async</module>
+    <module>spring-async-demo</module>
   </modules>
 
   <dependencyManagement>
