@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * PS: 下面描述中，堆区表示除常量池以外的堆区。
  */
 public class StringTest {
-
+// 下面的测试需要一个个运行
   @Test
   public void testString01() {
     String str1 = "string";
