@@ -9,6 +9,7 @@ public class LeetCode162 {
   public int findPeakElement(int[] nums) {
     int left = 0, right = nums.length - 1;
     while (left < right) {
+      // TODO: 还是没有太清楚的逻辑想明白这个mid偏小和偏大的逻辑，即如何立即想到才能避免重复比较和死循环。
       int mid = left + (right - left) / 2;
       if (nums[mid] > nums[mid + 1]) {
         // 说明峰值在左边
