@@ -14,13 +14,13 @@
   <description>flink demo for verify some function</description>
   <modules>
     <module>exactly-once-demo</module>
-    <module>savepoint-demo</module>
+    <module>flink-sql-demo</module>
   </modules>
 
   <properties>
     <flink.version>1.7.2</flink.version>
-    <scala.binary.version>2.11</scala.binary.version>
-    <scala.version>2.11.12</scala.version>
+    <scala.binary.version>2.12</scala.binary.version>
+    <scala.version>2.12.8</scala.version>
   </properties>
 
   <dependencies>
@@ -47,6 +47,13 @@
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>org.apache.flink</groupId>-->
+<!--      <artifactId>flink-table-api-scala-bridge_${scala.binary.version}</artifactId>-->
+<!--      <version>1.7.2</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
   </dependencies>
 
   <build>
