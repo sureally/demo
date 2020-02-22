@@ -19,3 +19,7 @@ spring:
       properties:
         session.timeout.ms: 60000
       max-poll-records: 10
+
+logging:
+  level:
+    root: debug

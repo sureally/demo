@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.annotation.KafkaListenerConfigurer;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistrar;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
@@ -28,7 +26,7 @@ public class KafkaConfig {
 
   private final Integer SINGLE_CONCURRENCY = 1;
 
-  private final Integer BATCH_CONCUARRENCY = 4;
+  private final Integer BATCH_CONCURRENCY = 4;
 
   /**
    * 默认，自动提交offset
@@ -60,7 +58,7 @@ public class KafkaConfig {
     // ack 的模式为手动提交 offset
     factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
     // 可设定多线程消费，最大线程数为消费topic的分区数，也就是一个线程消费一个分区可达到最大的吞吐量
-    factory.setConcurrency(BATCH_CONCUARRENCY);
+    factory.setConcurrency(BATCH_CONCURRENCY);
     return factory;
   }
 
