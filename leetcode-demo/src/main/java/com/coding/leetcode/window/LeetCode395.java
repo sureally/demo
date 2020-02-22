@@ -78,26 +78,26 @@ public class LeetCode395 {
 
   // 递归分治的解法
   private int helper(String s, int k, int lo, int hi){
-    Map<Character, Integer> charNumbers = new HashMap<>(26);
+    int[] charNumbers = new int[26];
     Set<Character> lessK = new HashSet<>();
     for (int i = lo; i <= hi; i++){
       char ch = s.charAt(i);
-      charNumbers.merge(ch, 1, Integer::sum);
+      charNumbers[ch - 'a']++;
     }
 
-    charNumbers.forEach((ch, n) -> {
-      if (n < k) {
-        lessK.add(ch);
+    for (int i = 0; i < charNumbers.length; i++) {
+      if (charNumbers[i] > 0 && charNumbers[i] < k) {
+        lessK.add((char)('a' + 1));
       }
-    });
+    }
 
     // 思路应该拆分，分治。拆分的理由是：出现次数小于k次的字符，说明需要的字串是一定不能包含它们的，那么就拆分它们
     for (char ch : lessK){
       // 实现的逻辑是：如果ch='b',  addadabbchhchc --拆分--> aaa 和 ccc
-      int midLeft = s.indexOf(ch, lo); // 说明 midLeft 一定是在[lo, hi] 之间的
+      int midLeft = s.indexOf(ch, lo); // 说明 midLeft 一定是在[lo, hi] 之间的, 不会是负数
       int midRight = midLeft;
       // 移到 s 中 ch 在 lo 及其右边第一次出现的连续的最右边的右边一个
-      while (midRight <= hi && s.charAt(midLeft) == s.charAt(midRight)) {
+      while (midRight <= hi && ch == s.charAt(midRight)) {
         midRight++;
       }
       return Math.max(helper(s, k, lo, midLeft - 1), helper(s, k, midRight, hi));
@@ -108,6 +108,6 @@ public class LeetCode395 {
   public static void main(String[] args) {
     LeetCode395 leetCode395 = new LeetCode395();
 
-    System.out.println(leetCode395.solution1("ababcc", 2));
+    System.out.println(leetCode395.solution2("ababcc", 2));
   }
 }
