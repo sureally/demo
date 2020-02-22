@@ -7,6 +7,6 @@ package com.coding.leetcode.bitoperation;
  */
 public class LeetCode411 {
   public String minAbbreviation(String target, String[] dictionary) {
-
+    return null;
   }
 }
