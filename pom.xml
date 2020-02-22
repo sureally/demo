@@ -12,6 +12,8 @@
   <modules>
     <module>flink-demo</module>
     <module>spring-demo</module>
+    <module>jdk-test-demo</module>
+    <module>leetcode-demo</module>
   </modules>
 
   <properties>
