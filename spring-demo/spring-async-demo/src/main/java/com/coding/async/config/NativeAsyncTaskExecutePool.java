@@ -40,6 +40,20 @@ public class NativeAsyncTaskExecutePool implements AsyncConfigurer {
     return executor;
   }
 
+  @Bean("secondAsyncTaskExecutor")
+  public Executor secondAsyncExecutor() {
+    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    executor.setCorePoolSize(nativeTaskThreadPoolProperties.getCorePoolSize());
+    executor.setMaxPoolSize(nativeTaskThreadPoolProperties.getMaxPoolSize());
+    executor.setKeepAliveSeconds(nativeTaskThreadPoolProperties.getKeepAliveSeconds());
+    executor.setQueueCapacity(nativeTaskThreadPoolProperties.getQueueCapacity());
+    executor.setThreadNamePrefix("second_async");
+    // 拒绝策略
+    // 此处为由调用者所在的线程来处理
+    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+    return executor;
+  }
+
   /**
    * 异步任务中的异常处理。默认的一般应该够用
    * @return

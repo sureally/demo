@@ -1,5 +1,7 @@
 package com.coding.async.task;
 
+import java.util.concurrent.CompletableFuture;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -13,12 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AsyncTask {
 
-  @Async
+  @Async(value = "secondAsyncTaskExecutor")
   public void async() {
     log.info("Doing async task: {}", Thread.currentThread());
   }
 
-  @Async
+  @Async(value = "nativeAsyncTaskExecutor")
   public void async(int taskId) {
     log.info("Doing async taskId is {}: {}", taskId, Thread.currentThread());
   }
@@ -26,5 +28,16 @@ public class AsyncTask {
   @Async
   public void asyncForThrowException() {
     throw new IllegalArgumentException("Something is worry!");
+  }
+
+  @Async
+  public CompletableFuture<String> asyncReturnFuture(String taskName, long seconds) {
+    log.info("Doing async taskId is {}: {}", taskName, Thread.currentThread());
+    try {
+      Thread.sleep(seconds * 1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    return CompletableFuture.completedFuture(taskName);
   }
 }
