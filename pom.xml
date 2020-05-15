@@ -14,6 +14,7 @@
     <module>spring-demo</module>
     <module>jdk-test-demo</module>
     <module>leetcode-demo</module>
+    <module>google-guava-demo</module>
   </modules>
 
   <properties>
