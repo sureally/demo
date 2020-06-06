@@ -15,4 +15,10 @@ spring:
 
 logging:
   level:
-    root: debug
+    root: info
+    org:
+      springframework:
+        orm:
+          jpa: debug
+        transaction:
+          interceptor: TRACE
