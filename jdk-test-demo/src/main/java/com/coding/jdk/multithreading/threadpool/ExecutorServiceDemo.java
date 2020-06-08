@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 /** @Author shu wj @Date 2020/6/6 20:42 @Description */
@@ -17,7 +19,7 @@ public class ExecutorServiceDemo {
       () -> {
         return (Callable<String>)
             () -> {
-              int sleepMillis = new Random().nextInt(10000);
+              int sleepMillis = new Random().nextInt(20000);
               System.out.println(
                   "Starting running task "
                       + Thread.currentThread().getName()
@@ -25,7 +27,7 @@ public class ExecutorServiceDemo {
                       + sleepMillis
                       + " millis");
               Thread.sleep(sleepMillis);
-              if (sleepMillis > 5000) throw new RuntimeException();
+              if (sleepMillis > 5000) throw new RuntimeException("error");
               return "task: sleep " + sleepMillis + " millis";
             };
       };
@@ -38,22 +40,23 @@ public class ExecutorServiceDemo {
       tasks.add(newTask.get());
     }
 
+    List<Future<String>> results = new ArrayList<>(10);
     try {
-      List<Future<String>> results = executor.invokeAll(tasks);
-
+      results = executor.invokeAll(tasks, 10, TimeUnit.SECONDS);
       System.out.println("completed invokedAll method");
-      for (Future<String> res : results) {
-        try {
-          System.out.println(res.get());
-        } catch (ExecutionException e) {
-          e.printStackTrace();
-        }
-      }
-
     } catch (InterruptedException e) {
       e.printStackTrace();
     } finally {
       executor.shutdown();
+    }
+
+    for (Future<String> res : results) {
+      System.out.println("isDone: " + res.isDone() + " -- isCancelled: " + res.isCancelled());
+      try {
+        System.out.println(res.get());
+      } catch (ExecutionException | InterruptedException | CancellationException e) {
+        System.out.println("执行错误: " + e.getClass() + " - " + e.getMessage());
+      }
     }
   }
 
