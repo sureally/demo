@@ -75,4 +75,23 @@ public class KafkaConfig {
     return factory;
   }
 
+  /**
+//   * KafkaTemplate
+//   * @return
+//   */
+//  @Bean
+//  public KafkaTemplate<Object, Object> kafkaTemplate(){
+//    return new KafkaTemplate<Object, Object>(producerFactory(), true);
+//  }
+//
+//  /**
+//   * ProducerFactory
+//   * @return
+//   */
+//  @Bean
+//  public ProducerFactory<Object, Object> producerFactory(){
+//    Map<String, Object> config = kafkaProperties.getProducer().buildProperties();
+//    ProducerFactory<Object, Object> producerFactory = new DefaultKafkaProducerFactory<>(config);
+//    return producerFactory;
+//  }
 }

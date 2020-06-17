@@ -3,23 +3,44 @@ server:
 
 spring:
   kafka:
-    bootstrap-servers: xxx.com
-    consumer:
-      group-id: consumer_test
+    bootstrap-servers:
+      consumer:
+        group-id: consumer_test
 
-      # 手动提交
-      enable-auto-commit: false
+        # 手动提交
+        enable-auto-commit: false
 
-      # latest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
-      # earliest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费.
-      # 这两个概念与flink中的概念不一样
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        # latest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+        # earliest: 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费.
+        # 这两个概念与flink中的概念不一样
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        properties:
+          session.timeout.ms: 60000
+        max-poll-records: 10
+
+    producer:
+      batch-size: 163840
+      retries: 0
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-        session.timeout.ms: 60000
-      max-poll-records: 10
+        linger.ms: 100
+        ssl:
+          keymanager:
+            algorithm: SunX509
+        max:
+          block:
+            ms: 10000
+          in:
+            flight:
+              requests:
+                per:
+                  connection: 80
+      buffer-memory: 16777216
+
 
 logging:
   level:
-    root: debug
+    root: info
