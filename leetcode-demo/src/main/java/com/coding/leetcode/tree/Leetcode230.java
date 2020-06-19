@@ -6,15 +6,6 @@ package com.coding.leetcode.tree;
  * @Description
  */
 public class Leetcode230 {
-  public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
 
   public int kthSmallest(TreeNode root, int k) {
     // left -> n

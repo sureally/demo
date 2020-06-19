@@ -2,17 +2,6 @@ package com.coding.leetcode.tree;
 
 /** @Author shu wj @Date 2020/5/25 23:37 @Description */
 public class Leetcode297 {
-  private static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
-
-
   // Encodes a tree to a single string.
   public String serialize(TreeNode root) {
     StringBuilder sb = new StringBuilder();
