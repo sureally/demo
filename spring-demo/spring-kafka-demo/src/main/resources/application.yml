@@ -37,7 +37,7 @@ spring:
             flight:
               requests:
                 per:
-                  connection: 80
+                  connection: 5
       buffer-memory: 16777216
 
 

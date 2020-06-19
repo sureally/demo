@@ -13,7 +13,7 @@ public class SimpleProducerTest {
 
   private final String topic = "test-for-kafka";
 
-  private final RateLimiter rateLimiter = RateLimiter.create(30000);
+  private final RateLimiter rateLimiter = RateLimiter.create(20000);
 
   @Autowired
   private SimpleProducer simpleProducer;
