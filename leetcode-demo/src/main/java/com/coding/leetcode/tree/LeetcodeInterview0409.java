@@ -45,9 +45,8 @@ public class LeetcodeInterview0409 {
       TreeNode cur = queue.get(i);
       queue.remove(i);
       path.add(cur.val);
-
       helper(cur, new LinkedList<>(queue), path);
-
+      // 恢复原状
       queue.add(i, cur);
       path.removeLast();
     }
