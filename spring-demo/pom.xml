@@ -17,6 +17,7 @@
     <module>spring-mybatis-plus-demo</module>
     <module>spring-async-demo</module>
     <module>spring-transaction-demo</module>
+    <module>spring-influxdb-demo</module>
   </modules>
 
   <dependencyManagement>
