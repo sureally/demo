@@ -15,8 +15,8 @@
     <module>jdk-test-demo</module>
     <module>leetcode-demo</module>
     <module>google-guava-demo</module>
-    <module>spring-influxdb-demo</module>
-    <module>spring-influxdb-demo</module>
+    <module>caffeine-demo</module>
+    <module>spark-demo</module>
   </modules>
 
   <properties>
