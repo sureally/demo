@@ -18,6 +18,7 @@
     <module>spring-async-demo</module>
     <module>spring-transaction-demo</module>
     <module>spring-influxdb-demo</module>
+    <module>spring-cache-demo</module>
   </modules>
 
   <dependencyManagement>
@@ -47,6 +48,18 @@
     </dependency>
 
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>2.1.6.RELEASE</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
 
 </project>
