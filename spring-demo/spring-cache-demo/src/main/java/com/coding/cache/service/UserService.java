@@ -1,5 +1,7 @@
 package com.coding.cache.service;
 
+import java.util.Optional;
+
 import com.coding.cache.entity.User;
 
 /**
@@ -9,7 +11,7 @@ import com.coding.cache.entity.User;
  */
 public interface UserService {
 
-  User getUser(String  id);
+  Optional<User> getUser(String  id);
 
   User insertUser(User user);
 }
