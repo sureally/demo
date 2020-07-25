@@ -19,6 +19,7 @@
     <module>spring-transaction-demo</module>
     <module>spring-influxdb-demo</module>
     <module>spring-cache-demo</module>
+    <module>spring-exercise-demo</module>
   </modules>
 
   <dependencyManagement>
