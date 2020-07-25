@@ -3,3 +3,8 @@
 *.iml
 
 */target/*
+/scala-demo/gradlew.bat
+/scala-demo/gradlew
+/scala-demo/gradle/
+/scala-demo/build/
+/scala-demo/.gradle/
