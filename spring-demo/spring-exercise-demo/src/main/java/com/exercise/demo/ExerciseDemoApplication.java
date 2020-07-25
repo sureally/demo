@@ -1,15 +1,12 @@
-package hello;
+package com.exercise.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * 应用入口.
- * @author shu wj
- */
+/** @Author shu wj @Date 2020/7/23 00:44 @Description */
 @SpringBootApplication
-public class Application {
+public class ExerciseDemoApplication {
   public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
+    SpringApplication.run(ExerciseDemoApplication.class, args);
   }
 }
