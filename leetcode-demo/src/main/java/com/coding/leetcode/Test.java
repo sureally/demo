@@ -1,65 +1,83 @@
 package com.coding.leetcode;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import com.coding.leetcode.tree.TreeNode;
 
 /** @Author shu wj @Date 2020/6/14 22:02 @Description */
 public class Test {
 
   public static class Solution_01 {
-    public int minFlips(String target) {
+
+    private Map<Integer, List<String>> mem = new HashMap<>();
+
+    public int strobogrammaticInRange(String low, String high) {
+      if (null == low || high == null) return 0;
+      int lo = low.length();
+      int hi = high.length();
+      BigInteger lowI = new BigInteger(low);
+      BigInteger highI = new BigInteger(high);
+
       int ans = 0;
-      // base state
-      char[] chars = new char[target.length()];
-      char[] targetChars = target.toCharArray();
-      int[] dp = new int[target.length() + 1];
-      dp[0] = 0;
-      // state
-      // dp[i] 表示 前 i 个元素 满足正确情况的 最少数
-
-      // 转移方程
-      // dp[x] = dp[i] + 1
-      for (int i = 1; i <= target.length(); i++) {
-        for (int j = 1; j <= target.length(); j++) {
-
+      for (int i = lo; i <= hi; i++) {
+        List<String> cur = helper(i, i);
+        mem.put(i, cur);
+        if (mem.size() > 2) {
+          mem.remove(i - 2);
         }
+
+        if (i == lo || i == hi) {
+          for (String s : cur) {
+            BigInteger curI = new BigInteger(s);
+            if (lowI.compareTo(curI) <= 0 && highI.compareTo(curI) >= 0) {
+              ans++;
+            }
+          }
+          continue;
+        }
+        ans += cur.size();
       }
 
       return ans;
     }
 
-    // 翻转 i + 1
-    private int flip(char[] target, char[] chars, int i) {
-      int correctNum = 0;
-      for (int j = i + 1; j <= chars.length; j++) {
-        if (target[j] != chars[j]) {
-          correctNum++;
-        } else {
-          break;
-        }
+    // 当前长度为n，目标为m
+    private List<String> helper(int n, int m) {
+      if (n < 0 || m < 0 || n > m) {
+        throw new IllegalArgumentException();
       }
-      return correctNum;
+
+      if (n == 0) {
+        return new ArrayList<>(Collections.singletonList(""));
+      } else if (n == 1) {
+        return new ArrayList<>(Arrays.asList("0", "1", "8"));
+      }
+
+      if (mem.containsKey(n)) {
+        return mem.get(n);
+      }
+
+      List<String> res = helper(n - 2, m);
+
+      List<String> ans = new ArrayList<>();
+
+      for (String str : res) {
+        if (n != m) {
+          // 0 不能放在首
+          ans.add("0" + str + "0");
+        }
+        ans.add("1" + str + "1");
+        ans.add("8" + str + "8");
+        ans.add("6" + str + "9");
+        ans.add("9" + str + "6");
+      }
+      return ans;
     }
   }
 
-  public static class Solution_02 {
-    private final Map<TreeNode, Integer> minHeight = new HashMap<>();
-    public int countPairs(TreeNode root, int distance) {
-      return 0;
-    }
-
-    private int helper(TreeNode root, int distance) {
-      return 0;
-    }
-  }
-
-  public static void main(String[] args) {
-    Solution_01 solution_01 = new Solution_01();
-
-    String s = "aaiougrt";
-    System.out.println(solution_01.minFlips(s));
-    ;
-  }
+  public static void main(String[] args) {}
 }

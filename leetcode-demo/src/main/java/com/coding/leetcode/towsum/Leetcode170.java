@@ -10,6 +10,9 @@ import java.util.Set;
 /** @Author shu wj @Date 2020/7/6 00:18 @Description */
 public class Leetcode170 {
   public static class Solution_01 {
+    /**
+     * 主要是 性能优化的点
+     */
     public static class TwoSum {
       // 优化可以考虑，通过排序 和 二分来加速查找
       private final List<Integer> singleCache;

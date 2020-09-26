@@ -1,8 +1,8 @@
 package com.coding.leetcode.recursive;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +17,11 @@ public class Leetcode248 {
       int ans = 0;
       int n = low.length();
       int m = high.length();
-      BigInteger lowI = new BigInteger(low);
-      BigInteger highI = new BigInteger(high);
       for (int i = n; i <= m; i++) {
         List<String> res = helper(i, i);
-        if (mem.size() >= 2) {
-          mem.put(i, res);
-          mem.remove(i - 2);
-        }
         if (i == n || i == m) {
           for (String str : res) {
-            BigInteger t = new BigInteger(str);
-            if (lowI.compareTo(t) <= 0 && highI.compareTo(t) >= 0) {
+            if (!((i == n && str.compareTo(low) < 0) || (i == m && str.compareTo(high) > 0))) {
               ans++;
             }
           }
@@ -41,16 +34,34 @@ public class Leetcode248 {
       return ans;
     }
 
-    private List<String> helper(int n, int m) {
-      if (n < 0 || m < 0 || n > m) throw new IllegalArgumentException();
+    // helper(12, 12) -> helper(10, 12) -> helper(8, 12) ... -> helper(0, 12) return
+    // cache(0), cache(2), ..., cache(10) -> cache(8) chach(10)
+    // cache(1), ..., cache(11) -> cache(9) cache(11)
 
-      if (n == 0) return new ArrayList<>(Arrays.asList(""));
-      else if (n == 1) return new ArrayList<>(Arrays.asList("0", "1", "8"));
+    private List<String> helper(int n, int m) f{
+      if (n < 0 || m < 0 || n > m) {
+        throw new IllegalArgumentException();
+      }
 
-      if (mem.containsKey(n)) return mem.get(n);
+      if (n == 0) {
+        return new ArrayList<>(Collections.singletonList(""));
+      } else if (n == 1) {
+        return new ArrayList<>(Arrays.asList("0", "1", "8"));
+      }
+
+      // 这里记忆化递归，存在问题，因为正常的返回值是不包含 0 开头的，但是作为中间的是可以以0为开头的。
+      if (n != m && mem.containsKey(n)) {
+        return mem.get(n);
+      }
 
       // 缩小规模
       List<String> res = helper(n - 2, m);
+
+      mem.put(n - 2, res);
+      if (mem.size() >= 2) {
+        mem.remove(n - 2 - 2);
+      }
+
 
       List<String> ans = new ArrayList<>();
       for (String str : res) {
@@ -121,8 +132,15 @@ public class Leetcode248 {
 
   public static void main(String[] args) {
     Solution_01 solution_01 = new Solution_01();
-    System.out.println(solution_01.strobogrammaticInRange("0", "0"));
+    Solution_02 solution_02 = new Solution_02();
 
-    System.out.println(solution_01.strobogrammaticInRange("50", "100"));
+    String lo = "0", hi = String.valueOf(Integer.MAX_VALUE);
+    long start = System.currentTimeMillis();
+    System.out.println(System.currentTimeMillis() - start);
+    System.out.println(solution_01.strobogrammaticInRange(lo, hi));
+    System.out.println(System.currentTimeMillis() - start);
+    start = System.currentTimeMillis();
+    System.out.println(solution_02.strobogrammaticInRange(lo, hi));
+    System.out.println(System.currentTimeMillis() - start);
   }
 }
